@@ -3,14 +3,6 @@ package ids
 
 import (
 	"crypto/rand"
-	"encoding/base32"
-
-	"github.com/jxskiss/base62"
-)
-
-var (
-	lowerCaseEncodeHex = "0123456789abcdefghijklmnopqrstuv"
-	encoding           = base32.NewEncoding(lowerCaseEncodeHex).WithPadding(base32.NoPadding)
 )
 
 // NewID returns a random ID in base32, which is not as compact as say base62 but is
@@ -19,7 +11,7 @@ var (
 func NewRandomBase32ID(len int) string {
 	b := make([]byte, len)
 	rand.Read(b) // rand.Read is guaranteed to not return errors.
-	return encoding.EncodeToString(b)
+	return EncodeToBase32String(b)
 }
 
 // Returns a base62-encoded ID from an alphanumeric dictionary, best suitable in
@@ -28,5 +20,5 @@ func NewRandomBase32ID(len int) string {
 func NewRandomBase62ID(len int) string {
 	b := make([]byte, len)
 	rand.Read(b) // rand.Read is guaranteed to not return errors.
-	return base62.EncodeToString(b)
+	return EncodeToBase62String(b)
 }
